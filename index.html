@@ -18,15 +18,15 @@
     </div>
     <!-- Table -->
     <div class="content">
-      <div class="input-data">
-        <label for="fname">First name: </label> 
-        <input type="text" name="fname" id="fname" />
-        <label for="lname">Last name: </label>
-        <input type="text" name="lname" id="lname" />
-        <label for="email">Email: </label>
-        <input type="email" name="email" id="email" />
-        <label for="gender">Gender: </label>
-        <select name="gender" id="gender">
+      <div class="input-form">
+        <label class="input-data" for="fname">First name: </label> 
+        <input class="input-data" type="text" name="fname" id="fname" />
+        <label class="input-data" for="lname">Last name: </label>
+        <input class="input-data" type="text" name="lname" id="lname" />
+        <label class="input-data" for="email">Email: </label>
+        <input class="input-data" type="email" name="email" id="email" />
+        <label class="input-data" for="gender">Gender: </label>
+        <select class="input-data" name="gender" id="gender">
             <option value="female">female</option>
             <option value="male">male</option>
             <option value="robot">robot</option>
@@ -34,8 +34,8 @@
             <option value="pirate">pirate</option>
             <option value="other">other</option>
         </select>
-        <label for="birthdate">Birthdate: </label>
-        <input type="date" name="birthdate" id="birthdate" />
+        <label class="input-data" for="birthdate">Birthdate: </label>
+        <input class="input-data" type="date" name="birthdate" id="birthdate" />
 
         <button onclick="addTableRow();">Add</button>
       </div>

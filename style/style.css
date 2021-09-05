@@ -43,13 +43,13 @@ body {
   padding: 0.625rem 0.625rem;
 }
 
-.content .input-data {
+.content .input-form {
   padding: 1.125rem;
   font-size: 1.125rem;
   background-color: var(--pastel-light-green);
 }
 
-.content .input-data input {
+.content .input-form .input-data {
   display: inline;
   margin-bottom: 0.625rem;
 }
@@ -121,10 +121,10 @@ td {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 65vh;
+    height: 70vh;
     padding: 0.625rem 0.625rem;
   }
-  .content .input-data input {
+  .content .input-form .input-data {
     display: block;
     margin-bottom: 0.625rem;
   }
@@ -140,7 +140,7 @@ td {
     height: 65vh;
     padding: 0.625rem 0.625rem;
   }
-  .content .input-data input {
+  .content .input-form .input-data {
     display: block;
     margin-bottom: 0.625rem;
   }
