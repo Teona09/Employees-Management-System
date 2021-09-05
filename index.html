@@ -5,6 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style/style.css" />
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+  />
     <title>EMS</title>
   </head>
   <body>
@@ -22,8 +26,6 @@
         Birthdate: <input type="date" name="birthdate" id="birthdate" />
 
         <button onclick="addTableRow();">Add</button>
-        <button onclick="editTableRow();">Edit</button>
-        <button onclick="deleteSelectedRow();">Delete</button>
       </div>
 
       <table id="employees-table">
@@ -36,6 +38,7 @@
           <th>Email</th>
           <th>Gender</th>
           <th>Birthdate</th>
+          <th>Actions</th>>
         </tr>
         <tr>
           <td>Minion</td>
@@ -43,6 +46,14 @@
           <td>minion@</td>
           <td>M</td>
           <td>1950-02-19</td>
+          <td>
+            <button onclick="editTableRow();" class="edit-icon">
+                <i class="fas fa-edit fa-2x"></i> 
+            </button>
+            <button onclick="deleteSelectedRow();" class="delete-icon">
+                <i class="fas fa-times fa-2x"></i> 
+            </button>
+          </td>
         </tr>
       </table>
     </div>

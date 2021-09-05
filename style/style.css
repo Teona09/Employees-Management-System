@@ -86,6 +86,16 @@ td {
   color: var(--orange);
 }
 
+.content #employees-table .edit-icon {
+  padding: 0.125rem;
+}
+
+.content #employees-table .delete-icon {
+  color: red;
+  padding: 0.125rem;
+  width: 2.15rem;
+}
+
 /*Footer*/
 .footer {
   position: absolute;

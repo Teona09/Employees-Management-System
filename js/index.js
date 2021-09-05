@@ -98,11 +98,13 @@ function editTableRow() {
 }
 
 function deleteSelectedRow() {
-  table.deleteRow(rIndex);
+  if(typeof rIndex == "number"){
+    table.deleteRow(rIndex);
   // clear input text
   document.getElementById("fname").value = "";
   document.getElementById("lname").value = "";
   document.getElementById("email").value = "";
   document.getElementById("gender").value = "";
   document.getElementById("birthdate").value = "";
+  }
 }
