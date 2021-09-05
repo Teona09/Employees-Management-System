@@ -9,6 +9,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 /*Body*/
@@ -24,7 +25,7 @@ body {
   left: 0;
   width: 100%;
   background-color: var(--light-orange);
-  padding: 5px 0px;
+  padding: 15px 0px;
   font-family: arial, sans-serif;
   font-weight: bolder;
   color: var(--orange);
@@ -43,8 +44,9 @@ body {
 }
 
 .content .input-data {
-  padding: 0.125rem;
+  padding: 1.125rem;
   font-size: 1.125rem;
+  background-color: var(--pastel-light-green);
 }
 
 .content .input-data input {
@@ -91,7 +93,7 @@ td {
   left: 0;
   width: 100%;
   background-color: var(--light-orange);
-  padding: 5px 0px;
+  padding: 10px 0px;
   font-family: arial, sans-serif;
   font-weight: bolder;
   color: var(--orange);
