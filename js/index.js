@@ -56,6 +56,7 @@ function addTableRow() {
     email = document.getElementById("email").value;
     gender = document.getElementById("gender").value;
     birthdate = document.getElementById("birthdate").value;
+    var formatedBirthdate = moment(document.getElementById("birthdate").value);
     actions = `<button onclick="editTableRow();" class="edit-icon"> <i class="fas fa-edit fa-2x"></i></button>
               <button onclick="deleteSelectedRow();" class="delete-icon"><i class="fas fa-times fa-2x"></i> </button>`;
 
@@ -63,7 +64,7 @@ function addTableRow() {
     cell2.innerHTML = lname;
     cell3.innerHTML = email;
     cell4.innerHTML = gender;
-    cell5.innerHTML = birthdate;
+    cell5.innerHTML = formatedBirthdate.format("DD MMM YYYY");
     cell6.innerHTML = actions;
     selectedRowToInput();
   }
@@ -78,7 +79,8 @@ function selectedRowToInput() {
       document.getElementById("lname").value = this.cells[1].innerHTML;
       document.getElementById("email").value = this.cells[2].innerHTML;
       document.getElementById("gender").value = this.cells[3].innerHTML;
-      document.getElementById("birthdate").value = this.cells[4].innerHTML;
+      var formatedBirthdate = moment(this.cells[4].innerHTML);
+      document.getElementById("birthdate").value = formatedBirthdate.format("YYYY-MM-DD");
     };
   }
 }
