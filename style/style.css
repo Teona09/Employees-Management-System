@@ -25,7 +25,7 @@ body {
   left: 0;
   width: 100%;
   background-color: var(--light-orange);
-  padding: 15px 0px;
+  padding: 1rem;
   font-family: arial, sans-serif;
   font-weight: bolder;
   color: var(--orange);
@@ -40,7 +40,7 @@ body {
   justify-content: center;
   align-items: center;
   height: 45vh;
-  padding: 10px 10px;
+  padding: 0.625rem 0.625rem;
 }
 
 .content .input-data {
@@ -56,12 +56,12 @@ body {
 
 /*table*/
 .content #employees-table {
-  width: 62.5rem;
+  width: 62.5em;
 }
 
 .content #employees-table caption {
   font-size: 1.5rem;
-  padding: 10px 10px;
+  padding: 0.625rem 0.625rem;
   color: var(--orange);
 }
 
@@ -81,7 +81,7 @@ td {
 
 .content th,
 td {
-  padding: 10px 10px;
+  padding: 0.625rem 0.625rem;
   background-color: var(--pastel-light-green);
   color: var(--orange);
 }
@@ -103,7 +103,7 @@ td {
   left: 0;
   width: 100%;
   background-color: var(--light-orange);
-  padding: 10px 0px;
+  padding: 0.625rem;
   font-family: arial, sans-serif;
   font-weight: bolder;
   color: var(--orange);
