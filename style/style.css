@@ -20,7 +20,7 @@ body {
 }
 /*Header*/
 .header {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -46,6 +46,8 @@ body {
   padding: 1.125rem;
   font-size: 1.125rem;
   background-color: var(--pastel-light-green);
+  position: fixed;
+  top: 5rem;
 }
 
 .content .input-form .input-data {
@@ -56,6 +58,9 @@ body {
 /*table*/
 .content #employees-table {
   width: 62.5em;
+  text-align: left;
+  position: fixed;
+  top: 10rem;
 }
 
 .content #employees-table caption {
@@ -101,7 +106,7 @@ td {
 
 /*Footer*/
 .footer {
-  position: absolute;
+  position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
