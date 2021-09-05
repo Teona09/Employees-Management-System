@@ -89,11 +89,20 @@ function editTableRow() {
   birthdate = document.getElementById("birthdate").value;
   if (!checkEmptyInput()) {
     var currentRow = table.rows[rIndex];
-    console.log(rIndex);
     currentRow.cells[0].innerHTML = fname;
     currentRow.cells[1].innerHTML = lname;
     currentRow.cells[2].innerHTML = email;
     currentRow.cells[3].innerHTML = gender;
     currentRow.cells[4].innerHTML = birthdate;
   }
+}
+
+function deleteSelectedRow() {
+  table.deleteRow(rIndex);
+  // clear input text
+  document.getElementById("fname").value = "";
+  document.getElementById("lname").value = "";
+  document.getElementById("email").value = "";
+  document.getElementById("gender").value = "";
+  document.getElementById("birthdate").value = "";
 }
