@@ -42,22 +42,32 @@ body {
     padding: 10px 10px;
 }
 
+.content .input-data {
+    padding: 0.125rem;
+    font-size: 1.125rem;
+}
+
+.content .input-data input{
+    display: inline;
+    margin-bottom: 0.625rem;
+}
+
 /*table*/
-.content table {
+.content #employees-table {
     width: 62.5rem;
 }
 
-.content table caption{
+.content #employees-table caption{
     font-size: 1.5rem;
     padding: 10px 10px;
     color: var(--orange);
 }
 
-.content table th {
+.content #employees-table th {
     text-align: left;
 }
 
-.content table, th, td {
+.content #employees-table, th, td {
     border-width: 0.025rem;
     border-color: black;
     border-style: solid;

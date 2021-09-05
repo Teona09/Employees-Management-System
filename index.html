@@ -14,7 +14,19 @@
     </div>
     <!-- Table -->
     <div class="content">
-    <table>
+
+        <div class="input-data">
+            First name: <input type="text" name="fname" id="fname">
+            Last name: <input type="text" name="lname" id="lname">
+            Email: <input type="email" name="email" id="email">
+            Gender: <input type="text" name="gender" id="gender">
+            Birthdate: <input type="date" name="birthdate" id="birthdate">
+    
+            <button>Add</button>
+            <button>Edit</button>
+            <button>Delete</button>
+        </div>
+    <table id="employees-table">
         <caption>Employees List</caption>
         <tr>
             <th>Photo</th>
@@ -34,7 +46,9 @@
             <td>M</td>
             <td>19.02.1950</td>
         </tr>
+
     </table>
+    
 </div>
     <!-- Footer -->
     <div class="footer">
