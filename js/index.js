@@ -1,5 +1,5 @@
 var rIndex,
-table = document.getElementById("employees-table");
+  table = document.getElementById("employees-table");
 
 function checkEmptyInput() {
   var isEmpty = false;
@@ -20,10 +20,10 @@ function checkEmptyInput() {
     isEmpty = true;
   } else if (gender === "") {
     alert("Gender Can't Be Empty.");
-} else if (birthdate === "") {
+  } else if (birthdate === "") {
     alert("Birthdate Can't Be Empty.");
-  } else if (calculateAge(birthdate) < 16){
-       alert("Age sould be above 16.");
+  } else if (calculateAge(birthdate) < 16) {
+    alert("Age sould be above 16.");
   }
   return isEmpty;
 }
@@ -50,17 +50,21 @@ function addTableRow() {
     cell3 = newRow.insertCell(2);
     cell4 = newRow.insertCell(3);
     cell5 = newRow.insertCell(4);
+    cell6 = newRow.insertCell(5);
     fname = document.getElementById("fname").value;
     lname = document.getElementById("lname").value;
     email = document.getElementById("email").value;
     gender = document.getElementById("gender").value;
     birthdate = document.getElementById("birthdate").value;
+    actions = `<button onclick="editTableRow();" class="edit-icon"> <i class="fas fa-edit fa-2x"></i></button>
+              <button onclick="deleteSelectedRow();" class="delete-icon"><i class="fas fa-times fa-2x"></i> </button>`;
 
     cell1.innerHTML = fname;
     cell2.innerHTML = lname;
     cell3.innerHTML = email;
     cell4.innerHTML = gender;
     cell5.innerHTML = birthdate;
+    cell6.innerHTML = actions;
     selectedRowToInput();
   }
 }
@@ -82,6 +86,7 @@ function selectedRowToInput() {
 selectedRowToInput();
 
 function editTableRow() {
+  selectedRowToInput();
   fname = document.getElementById("fname").value;
   lname = document.getElementById("lname").value;
   email = document.getElementById("email").value;
@@ -98,13 +103,14 @@ function editTableRow() {
 }
 
 function deleteSelectedRow() {
-  if(typeof rIndex == "number"){
+  selectedRowToInput();
+  if (typeof rIndex == "number") {
     table.deleteRow(rIndex);
-  // clear input text
-  document.getElementById("fname").value = "";
-  document.getElementById("lname").value = "";
-  document.getElementById("email").value = "";
-  document.getElementById("gender").value = "";
-  document.getElementById("birthdate").value = "";
+    // clear input text
+    document.getElementById("fname").value = "";
+    document.getElementById("lname").value = "";
+    document.getElementById("email").value = "";
+    document.getElementById("gender").value = "";
+    document.getElementById("birthdate").value = "";
   }
 }
