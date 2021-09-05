@@ -14,14 +14,14 @@
     </div>
     <!-- Table -->
     <div class="content">
-      <div class="input-data">
-        First name: <input type="text" name="fname" id="fname" /> Last name:
-        <input type="text" name="lname" id="lname" /> Email:
-        <input type="email" name="email" id="email" /> Gender:
-        <input type="text" name="gender" id="gender" /> Birthdate:
-        <input type="date" name="birthdate" id="birthdate" />
+      <div class="input-data">  
+        First name: <input type="text" name="fname" id="fname" />
+        Last name:<input type="text" name="lname" id="lname" /> 
+        Email: <input type="email" name="email" id="email" /> 
+        Gender: <input type="text" name="gender" id="gender" /> 
+        Birthdate: <input type="date" name="birthdate" id="birthdate" />
 
-        <button>Add</button>
+        <button onclick="addTableRow();">Add</button>
         <button>Edit</button>
         <button>Delete</button>
       </div>
@@ -31,7 +31,6 @@
           Employees List
         </caption>
         <tr>
-          <th>Photo</th>
           <th>First name</th>
           <th>Last name</th>
           <th>Email</th>
@@ -39,9 +38,6 @@
           <th>Birthdate</th>
         </tr>
         <tr>
-          <td>
-            <img src="images/profile.jpg" alt="picture" , height="30px" />
-          </td>
           <td>Minion</td>
           <td>Gru</td>
           <td>minion@</td>
