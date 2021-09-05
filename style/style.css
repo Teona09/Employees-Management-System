@@ -88,12 +88,16 @@ td {
 
 .content #employees-table .edit-icon {
   padding: 0.125rem;
+  background: none;
+  border: none;
 }
 
 .content #employees-table .delete-icon {
   color: red;
   padding: 0.125rem;
   width: 2.15rem;
+  background: none;
+  border: none;
 }
 
 /*Footer*/
@@ -109,4 +113,79 @@ td {
   color: var(--orange);
   display: flex;
   justify-content: center;
+}
+
+@media (max-width: 1345px) {
+  .content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 65vh;
+    padding: 0.625rem 0.625rem;
+  }
+  .content .input-data input {
+    display: block;
+    margin-bottom: 0.625rem;
+  }
+
+}
+
+@media (max-width: 1120px) {
+  .content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 65vh;
+    padding: 0.625rem 0.625rem;
+  }
+  .content .input-data input {
+    display: block;
+    margin-bottom: 0.625rem;
+  }
+  .content #employees-table {
+    width: 45em;
+  }
+  .content #employees-table caption {
+    font-size: 1.125rem;
+    padding: 0.45rem 0.45rem;
+    color: var(--orange);
+  }
+  
+  .content #employees-table th {
+    text-align: left;
+  }
+  
+  .content #employees-table,
+  th,
+  td {
+    border-width: 0.025rem;
+    border-color: black;
+    border-style: solid;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+  }
+  
+  .content th,
+  td {
+    padding: 0.625rem 0.625rem;
+    background-color: var(--pastel-light-green);
+    color: var(--orange);
+  }
+  
+  .content #employees-table .edit-icon {
+    padding: 0.05rem;
+    width: 1.75rem;
+    background: none;
+    border: none;
+  }
+  
+  .content #employees-table .delete-icon {
+    color: red;
+    padding: 0.05rem;
+    width: 1.75rem;
+    background: none;
+    border: none;
+  }
 }
