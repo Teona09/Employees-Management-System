@@ -48,6 +48,8 @@ body {
   background-color: var(--pastel-light-green);
   position: fixed;
   top: 5rem;
+  border: 2px solid black;
+  border-radius: 10%;
 }
 
 .content .input-form .input-data {
@@ -67,6 +69,7 @@ body {
   font-size: 1.5rem;
   padding: 0.625rem 0.625rem;
   color: var(--orange);
+  font-style: italic;
 }
 
 .content #employees-table th {
@@ -118,7 +121,7 @@ td {
   justify-content: center;
 }
 
-@media (max-width: 1345px) {
+@media (max-width: 1530px) {
   .content {
     display: flex;
     flex-direction: column;
@@ -130,6 +133,10 @@ td {
   .content .input-form .input-data {
     display: block;
     margin-bottom: 0.625rem;
+  }
+
+  .content #employees-table {
+    top: 32rem;
   }
 
 }
