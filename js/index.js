@@ -125,25 +125,6 @@ function selectedRowToInput() {
   }
 }
 
-function editTableRow() {
-  selectedRowToInput();
-  photo = document.getElementById("photo").value;
-  fname = document.getElementById("fname").value;
-  lname = document.getElementById("lname").value;
-  email = document.getElementById("email").value;
-  gender = document.getElementById("gender").value;
-  birthdate = document.getElementById("birthdate").value;
-  if (!checkEmptyInput()) {
-    var currentRow = table.rows[rIndex];
-    currentRow.cells[0].innerHTML = photo;
-    currentRow.cells[1].innerHTML = fname;
-    currentRow.cells[2].innerHTML = lname;
-    currentRow.cells[3].innerHTML = email;
-    currentRow.cells[4].innerHTML = gender;
-    currentRow.cells[5].innerHTML = birthdate;
-  }
-}
-
 function deleteSelectedRow() {
   selectedRowToInput();
   if (typeof rIndex == "number") {
