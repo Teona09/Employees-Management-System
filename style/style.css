@@ -167,10 +167,6 @@ td {
     margin-bottom: 0.625rem;
   }
 
-  .content #employees-table {
-    top: 32rem;
-  }
-
 }
 
 @media (max-width: 1120px) {

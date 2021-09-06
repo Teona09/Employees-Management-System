@@ -11,7 +11,7 @@
     />
     <title>EMS</title>
   </head>
-  <body>
+  <body onload="loadData();">
     <!-- Header -->
     <div class="header">
       <h2>EMS</h2>
@@ -66,23 +66,6 @@
           <th>Gender</th>
           <th>Birthdate</th>
           <th>Actions</th>
-        </tr>
-        <tr>
-          <td><img src="https://eitrawmaterials.eu/wp-content/uploads/2016/09/person-icon.png" alt="profile-picture" height=40>
-          </td>
-          <td>Minion</td>
-          <td>Gru</td>
-          <td>minion@</td>
-          <td>pirate</td>
-          <td>19 Feb 1950</td>
-          <td>
-            <button onclick="editTableRow();" class="edit-icon">
-              <i class="fas fa-edit fa-2x"></i>
-            </button>
-            <button onclick="deleteSelectedRow();" class="delete-icon">
-              <i class="fas fa-times fa-2x"></i>
-            </button>
-          </td>
         </tr>
       </table>
     </section>
