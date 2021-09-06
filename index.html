@@ -27,13 +27,13 @@
           <span class="close">&times;</span>
           <div class="input-form">
             <label class="input-data" for="fname">First name: </label>
-            <input class="input-data" type="text" name="fname" id="fname" />
+            <input class="input-data" type="text" name="fname" id="fname" oninvalid="alert('First Name Can\'t Be Empty.');" required/>
             <label class="input-data" for="lname">Last name: </label>
-            <input class="input-data" type="text" name="lname" id="lname" />
+            <input class="input-data" type="text" name="lname" id="lname" oninvalid="alert('Last Name Can\'t Be Empty.');" required/>
             <label class="input-data" for="email">Email: </label>
-            <input class="input-data" type="email" name="email" id="email" />
+            <input class="input-data" type="email" name="email" id="email" oninvalid="alert('Email Can\'t Be Empty.');" required/>
             <label class="input-data" for="gender">Gender: </label>
-            <select class="input-data" name="gender" id="gender">
+            <select class="input-data" name="gender" id="gender" required>
               <option value="female">female</option>
               <option value="male">male</option>
               <option value="robot">robot</option>
@@ -42,12 +42,7 @@
               <option value="other">other</option>
             </select>
             <label class="input-data" for="birthdate">Birthdate: </label>
-            <input
-              class="input-data"
-              type="date"
-              name="birthdate"
-              id="birthdate"
-            />
+            <input class="input-data" type="date" name="birthdate" id="birthdate" required/>
             <label class="input-data" for="photo">Photo: </label>
             <input class="input-data" type="file" name="photo" id="photo" />
             <button onclick="addTableRow();">Submit</button>

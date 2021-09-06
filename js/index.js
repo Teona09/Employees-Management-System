@@ -18,6 +18,9 @@ function checkEmptyInput() {
   } else if (email === "") {
     alert("Email Can't Be Empty.");
     isEmpty = true;
+  } else if (!validateEmail(email)) {
+    alert("Email is not valid");
+    isEmpty = true;
   } else if (gender === "") {
     alert("Gender Can't Be Empty.");
     isEmpty = true;
@@ -40,6 +43,11 @@ function calculateAge(dob) {
     age--;
   }
   return age;
+}
+
+function validateEmail(email) {
+        var re = /\S+@\S+\.\S+/;
+        return re.test(email);
 }
 
 function addTableRow() {
