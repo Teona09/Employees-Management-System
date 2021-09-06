@@ -55,7 +55,25 @@ function addTableRow() {
     cell5 = newRow.insertCell(4);
     cell6 = newRow.insertCell(5);
     cell7 = newRow.insertCell(6);
-    photo = document.getElementById("photo").value;
+    var photo = null;
+    const preview = document.querySelector('img');
+    const file = document.querySelector('input[type=file]').files[0];
+    const reader = new FileReader();
+  
+    reader.addEventListener("load", function () {
+      // convert image file to base64 string
+      preview.src = reader.result;
+    }, false);
+  
+    if (file) {
+      reader.readAsDataURL(file);
+      photo = preview.src;
+    }
+
+    if(photo==null){
+      photo = "https://eitrawmaterials.eu/wp-content/uploads/2016/09/person-icon.png";
+    }
+
     fname = document.getElementById("fname").value;
     lname = document.getElementById("lname").value;
     email = document.getElementById("email").value;
@@ -65,7 +83,7 @@ function addTableRow() {
     actions = `<button onclick="editTableRow();" class="edit-icon"> <i class="fas fa-edit fa-2x"></i></button>
               <button onclick="deleteSelectedRow();" class="delete-icon"><i class="fas fa-times fa-2x"></i> </button>`;
 
-    cell1.innerHTML = photo;
+    cell1.innerHTML = `<img src="${photo}" alt="profile-picture" height=40>`;
     cell2.innerHTML = fname;
     cell3.innerHTML = lname;
     cell4.innerHTML = email;
