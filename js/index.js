@@ -20,10 +20,13 @@ function checkEmptyInput() {
     isEmpty = true;
   } else if (gender === "") {
     alert("Gender Can't Be Empty.");
+    isEmpty = true;
   } else if (birthdate === "") {
     alert("Birthdate Can't Be Empty.");
+    isEmpty = true;
   } else if (calculateAge(birthdate) < 16) {
     alert("Age sould be above 16.");
+    isEmpty = true;
   }
   return isEmpty;
 }
@@ -122,4 +125,31 @@ function clearField(){
   document.getElementById("email").value = "";
   document.getElementById("gender").value = "";
   document.getElementById("birthdate").value = "";
+}
+
+/* functions for modal window add*/
+// Get the modal
+var modalAdd = document.getElementById("myModal");
+
+// Get the button that opens the modal
+var addBtn = document.getElementById("addWithModal");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks the button, open the modal 
+addBtn.onclick = function() {
+  modalAdd.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modalAdd.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modalAdd) {
+    modalAdd.style.display = "none";
+  }
 }

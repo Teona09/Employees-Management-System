@@ -32,6 +32,53 @@ body {
   justify-content: center;
 }
 
+.content #addWithModal {
+  position: fixed;
+  top: 7rem;
+  color:var(--pastel-yellow);
+  padding: 0.125rem;
+  width: 10rem;
+  font-size: 1.125rem;
+  background-color: var(--orange);
+}
+
+.modal-add {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content-add {
+  background-color: var(--pastel-light-green);
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+/* The Close Button */
+.modal-content-add .close {
+  color: black;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.modal-content-add .close:hover,
+.modal-content-add .close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
 /*Content*/
 .content {
   display: flex;
@@ -40,21 +87,6 @@ body {
   align-items: center;
   height: 45vh;
   padding: 0.625rem 0.625rem;
-}
-
-.content .input-form {
-  padding: 1.125rem;
-  font-size: 1.125rem;
-  background-color: var(--pastel-light-green);
-  position: fixed;
-  top: 5rem;
-  border: 2px solid black;
-  border-radius: 10%;
-}
-
-.content .input-form .input-data {
-  display: inline;
-  margin-bottom: 0.625rem;
 }
 
 /*table*/
@@ -149,10 +181,6 @@ td {
     align-items: center;
     height: 65vh;
     padding: 0.625rem 0.625rem;
-  }
-  .content .input-form .input-data {
-    display: block;
-    margin-bottom: 0.625rem;
   }
   .content #employees-table {
     width: 45em;
