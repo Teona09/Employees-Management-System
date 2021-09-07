@@ -26,26 +26,39 @@
         <div class="modal-content-add">
           <span class="close">&times;</span>
           <div class="input-form">
-            <label class="input-data" for="fname">First name: </label>
-            <input class="input-data" type="text" name="fname" id="fname" oninvalid="alert('First Name Can\'t Be Empty.');" required/>
-            <label class="input-data" for="lname">Last name: </label>
-            <input class="input-data" type="text" name="lname" id="lname" oninvalid="alert('Last Name Can\'t Be Empty.');" required/>
-            <label class="input-data" for="email">Email: </label>
-            <input class="input-data" type="email" name="email" id="email" oninvalid="alert('Email Can\'t Be Empty.');" required/>
-            <label class="input-data" for="gender">Gender: </label>
-            <select class="input-data" name="gender" id="gender" required>
-              <option value="female">female</option>
-              <option value="male">male</option>
-              <option value="robot">robot</option>
-              <option value="ninja">ninja</option>
-              <option value="pirate">pirate</option>
-              <option value="other">other</option>
-            </select>
-            <label class="input-data" for="birthdate">Birthdate: </label>
-            <input class="input-data" type="date" name="birthdate" id="birthdate" required/>
-            <label class="input-data" for="photo">Photo: </label>
-            <input class="input-data" type="file" name="photo" id="photo" />
-            <button onclick="addTableRow();">Submit</button>
+            <div class="input-data">
+              <label for="fname">First name: </label>
+              <input type="search" class="search-bar" name="fname" id="fname" required />
+            </div>
+            <div class="input-data">
+              <label for="lname">Last name: </label>
+              <input type="search" class="search-bar" name="lname" id="lname" required />
+            </div>
+            <div class="input-data">
+              <label for="email">Email: </label>
+              <input type="search" class="search-bar" name="email" id="email" required />
+            </div>
+            <div class="input-data">
+              <label for="gender">Gender: </label>
+              <select name="gender" id="gender" required>
+                <option value="female">female</option>
+                <option value="male">male</option>
+                <option value="robot">robot</option>
+                <option value="ninja">ninja</option>
+                <option value="pirate">pirate</option>
+                <option value="other">other</option>
+              </select>
+            </div>
+            <div class="input-data">
+              <label for="birthdate">Birthdate: </label>
+              <input type="date" name="birthdate" id="birthdate" required />
+            </div>
+            <div class="input-data">
+              <label for="photo">Photo: </label>
+              <input type="file" name="photo" id="photo" />
+            </div>
+            <br>
+            <button id="submit" onclick="addTableRow();">Submit</button>
           </div>
         </div>
       </div>
