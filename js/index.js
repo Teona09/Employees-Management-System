@@ -117,22 +117,6 @@ function addTableRow() {
   }
 }
 
-function selectedRowToInput() {
-  for (var i = 1; i < table.rows.length; i++) {
-    table.rows[i].onclick = function () {
-      // get the selected row index
-      rIndex = this.rowIndex;
-      document.getElementById("photo").value = "";
-      document.getElementById("fname").value = this.cells[1].innerHTML;
-      document.getElementById("lname").value = this.cells[2].innerHTML;
-      document.getElementById("email").value = this.cells[3].innerHTML;
-      document.getElementById("gender").value = this.cells[4].innerHTML;
-      var formatedBirthdate = moment(this.cells[5].innerHTML);
-      document.getElementById("birthdate").value = formatedBirthdate.format("YYYY-MM-DD");
-    };
-  }
-}
-
 function deleteSelectedRow(employee) {
   var result = confirm("Are you sure you want to delete this row?");
   if (result) {
