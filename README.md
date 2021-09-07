@@ -2,6 +2,7 @@
 
 Veti construi un CMS (content management system) pentru angajati. Mai pe intelesul tuturor, un tabel cu angajati.
 
+### Demo 1:
 - [x] Informatiile care se cer despre angajati:
 Nume
 Prenume
@@ -28,3 +29,15 @@ Userul trebuie sa poata face input la toate datele astea intr-o pagina web. Info
 - [x] BONUS: persistenta cu JSON local sau local storage
 - [ ] BONUS: make it look good
 - [x] BONUS: input de date cu un modal
+
+
+### Demo 2:
+Integrate Firebase over the Employee CMS you've demoed.
+
+Adding an employee should insert an employee into a Firebase DB
+Populating the employee table should show all the Employees in the Firebase DB
+
+Sorting, filtering and searching should also be done on the Firebase DB using the .filter and .sort tools provided by Firebase.
+
+You can use either Realtime Database or Cloud Firestore.
+For more info, read the Firebase Documentation.
