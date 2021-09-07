@@ -90,7 +90,7 @@ function addTableRow() {
       photo = "https://eitrawmaterials.eu/wp-content/uploads/2016/09/person-icon.png";
     }
 
-    actions = `<button onclick="deleteSelectedRow();" class="delete-icon"><i class="fas fa-times fa-2x"></i> </button>`;
+    actions = `<button onclick="deleteSelectedRow(this);" class="delete-icon"><i class="fas fa-times fa-2x"></i> </button>`;
 
     arrayEmployee = [];
     arrayEmployee[0] = `<img src="${photo}" alt="profile-picture" height=40>`;
@@ -133,11 +133,11 @@ function selectedRowToInput() {
   }
 }
 
-function deleteSelectedRow() {
-  selectedRowToInput();
-  if (typeof rIndex == "number") {
-    table.deleteRow(rIndex);
-    clearField();
+function deleteSelectedRow(employee) {
+  var result = confirm("Are you sure you want to delete this row?");
+  if (result) {
+      var e=employee.parentNode.parentNode;
+      e.parentNode.removeChild(e);
   }
 }
 
