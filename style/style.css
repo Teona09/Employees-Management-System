@@ -125,18 +125,17 @@ td {
   color: var(--orange);
 }
 
-.content #employees-table .edit-icon {
-  padding: 0.125rem;
-  background: none;
-  border: none;
-}
-
 .content #employees-table .delete-icon {
   color: red;
-  padding: 0.125rem;
-  width: 2.15rem;
+  padding: 1rem 1rem;
+  width: 2rem;
+  height: 2rem;
   background: none;
   border: none;
+  font-size: 1.125rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /*Footer*/
