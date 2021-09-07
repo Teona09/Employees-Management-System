@@ -86,7 +86,7 @@ function addTableRow() {
       photo = img.src;
     }
 
-    if(photo==null){
+    if(photo==null) {
       photo = "https://eitrawmaterials.eu/wp-content/uploads/2016/09/person-icon.png";
     }
 
@@ -125,7 +125,7 @@ function deleteSelectedRow(employee) {
   }
 }
 
-function clearField(){
+function clearField() {
   document.getElementById("fname").value = "";
   document.getElementById("lname").value = "";
   document.getElementById("email").value = "";
@@ -133,7 +133,7 @@ function clearField(){
   document.getElementById("birthdate").value = "";
 }
 
-function loadData(){
+function loadData() {
   var j=1;
   var archive=[];
   for (var i = 0; i<localStorage.length; i++) 
