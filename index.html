@@ -55,7 +55,8 @@
             </div>
             <div class="input-data">
               <label for="photo">Photo: </label>
-              <input type="file" name="photo" id="photo" />
+              <input type="file" name="photo" id="photo" onchange="showMyImage(this)"/>
+              <img id="imagePlaceholder" src="./images/person-icon.png" height="40px"/>
             </div>
             <br>
             <button id="submit" onclick="addTableRow();">Submit</button>

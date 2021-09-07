@@ -64,36 +64,20 @@ function addTableRow() {
     cell6 = newRow.insertCell(5);
     cell7 = newRow.insertCell(6);
 
+    photoSrc = document.getElementById("imagePlaceholder").src;
+    photoSrc.replace(",", "\\\,");
+    console.log(photoSrc);
     fname = document.getElementById("fname").value;
     lname = document.getElementById("lname").value;
     email = document.getElementById("email").value;
     gender = document.getElementById("gender").value;
     birthdate = document.getElementById("birthdate").value;
     var formatedBirthdate = moment(document.getElementById("birthdate").value);
-    const file = document.querySelector('#photo').files[0];
-    const img = new Image();
-    const reader = new FileReader();
-    photo = null;
-
-    reader.addEventListener("load", function () {
-      // convert image file to base64 string
-      img.src = reader.result;
-      console.log(reader.result);
-    }, false);
-
-    if (file) {
-      reader.readAsDataURL(file);
-      photo = img.src;
-    }
-
-    if(photo==null) {
-      photo = "https://eitrawmaterials.eu/wp-content/uploads/2016/09/person-icon.png";
-    }
 
     actions = `<button onclick="deleteSelectedRow(this);" class="delete-icon"><i class="fas fa-times fa-2x"></i> </button>`;
 
     arrayEmployee = [];
-    arrayEmployee[0] = `<img src="${photo}" alt="profile-picture" height=40>`;
+    arrayEmployee[0] = photoSrc;
     arrayEmployee[1] = fname;
     arrayEmployee[2] = lname;
     arrayEmployee[3] = email;
@@ -104,16 +88,33 @@ function addTableRow() {
 
     archive = localStorage.getItem(`${email}`);
     arrayEmployee = archive.split(",");
-    cell1.innerHTML = arrayEmployee[0];
-    cell2.innerHTML = arrayEmployee[1];
-    cell3.innerHTML = arrayEmployee[2];
-    cell4.innerHTML = arrayEmployee[3];
-    cell5.innerHTML = arrayEmployee[4];
-    cell6.innerHTML = arrayEmployee[5];
-    cell7.innerHTML = arrayEmployee[6];
+    cell1.innerHTML = `<img src=${arrayEmployee[0]+","+arrayEmployee[1]} alt="profile-picture" height=40>`;
+    cell2.innerHTML = arrayEmployee[2];
+    cell3.innerHTML = arrayEmployee[3];
+    cell4.innerHTML = arrayEmployee[4];
+    cell5.innerHTML = arrayEmployee[5];
+    cell6.innerHTML = arrayEmployee[6];
+    cell7.innerHTML = arrayEmployee[7];
 
     imageSrc="";
     clearField();
+  }
+}
+
+function showMyImage(fileInput) {
+  var imageFile = fileInput.files[0];
+  var img = document.getElementById("imagePlaceholder");
+  var imageType = /image.*/;
+  if (imageFile.type.match(imageType)) {
+    img.file = imageFile;
+
+    var reader = new FileReader();
+    reader.onload = (function (img) {
+      return function (e) {
+        img.src = e.target.result;
+      };
+    })(img);
+    reader.readAsDataURL(imageFile);
   }
 }
 
@@ -131,6 +132,7 @@ function clearField() {
   document.getElementById("email").value = "";
   document.getElementById("gender").value = "";
   document.getElementById("birthdate").value = "";
+  document.getElementById("photo").value = "";
 }
 
 function loadData() {
@@ -143,20 +145,20 @@ function loadData() {
         var row= table.insertRow(j);
         row.id = arrayEmployee[0]+"row";
         var cell1 = row.insertCell(0);
-        cell1.innerHTML = arrayEmployee[0];
+        cell1.innerHTML = `<img src=${arrayEmployee[0]+","+arrayEmployee[1]} alt="profile-picture" height=40>`
         var cell2 = row.insertCell(1);
-        cell2.innerHTML = arrayEmployee[1];
+        cell2.innerHTML = arrayEmployee[2];
         var cell3 = row.insertCell(2);
-        cell3.innerHTML = arrayEmployee[2];
+        cell3.innerHTML = arrayEmployee[3];
         var cell4 = row.insertCell(3);
-        cell4.innerHTML = arrayEmployee[3];
+        cell4.innerHTML = arrayEmployee[4];
         var cell5 = row.insertCell(4);
-        cell5.innerHTML = arrayEmployee[4];
+        cell5.innerHTML = arrayEmployee[5];
         var cell6 = row.insertCell(5);
-        var birthdate = moment(arrayEmployee[5]);
+        var birthdate = moment(arrayEmployee[6]);
         cell6.innerHTML = birthdate.format("DD MMM YYYY");
         var cell7 = row.insertCell(6);
-        cell7.innerHTML = arrayEmployee[6];
+        cell7.innerHTML = arrayEmployee[7];
         j++;
     }
 }
