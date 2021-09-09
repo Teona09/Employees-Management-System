@@ -1,5 +1,33 @@
+/*----------------- Firebase configuration ---------------------*/
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.1/firebase-app.js";
+import { getFirestore, collection, getDocs, getDoc } from "https://www.gstatic.com/firebasejs/9.0.1/firebase-firestore.js"
+
+// Web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyCiwinIJm4D2EPW_Tszx3DiupVbJtt_N7M",
+  authDomain: "employees-maagement-system.firebaseapp.com",
+  projectId: "employees-maagement-system",
+  storageBucket: "employees-maagement-system.appspot.com",
+  messagingSenderId: "7399188677",
+  appId: "1:7399188677:web:53f94e250a4c3b503ba8ac"
+};
+
+// Initialize Firebase
+const firebaseApp = initializeApp(firebaseConfig);
+const db = getFirestore(firebaseApp);
+/*--------------------------------------------------------------*/
+
+// Global variables
 var rIndex,
   table = document.getElementById("employees-table");
+
+async function getAllEmployess() {
+  const todosCol = collection(db, "employeesData");
+  const spanshot = await getDocs(todosCol);
+  console.log("data retrieved from firebase");
+}
+
+getAllEmployess();
 
 function checkEmptyInput() {
   var isEmpty = false;
