@@ -21,45 +21,80 @@ const db = getFirestore(firebaseApp);
 var rIndex,
   table = document.getElementById("employees-table");
 
-async function getAllEmployess() {
-  const todosCol = collection(db, "employeesData");
-  const spanshot = await getDocs(todosCol);
-  console.log("data retrieved from firebase");
+async function getAllEmployees() {
+  //const employeesCollection = collection(db, "employeesData");
+  //const spanshot = await getDocs(employeesCollection);
+  const employeesSpanshot = await getDocs(collection(db,"employeesData"));
+  loadDataFromFirebase(employeesSpanshot);
+  console.log("-> function getAllEmployees");
 }
 
-getAllEmployess();
+getAllEmployees();
+
+function loadDataFromFirebase(employeesSpanshot) {
+  var j=1;
+  employeesSpanshot.forEach((doc) => {
+    var row= table.insertRow(j);
+    var id = doc.id;
+    row.id = id+"row";
+    var data = doc.data();
+    var cell1 = row.insertCell(0);
+    cell1.innerHTML = `<img src=${data["photoSrc"]} alt="profile-picture" height=40>`
+    var cell2 = row.insertCell(1);
+    cell2.innerHTML = data["fname"];
+    var cell3 = row.insertCell(2);
+    cell3.innerHTML = data["lname"];
+    var cell4 = row.insertCell(3);
+    cell4.innerHTML = data["email"];
+    var cell5 = row.insertCell(4);
+    cell5.innerHTML = data["gender"];
+    var cell6 = row.insertCell(5);
+    var birthdate = moment(data["birthdate"]);
+    cell6.innerHTML = birthdate.format("DD MMM YYYY");
+    var cell7 = row.insertCell(6);
+    cell7.innerHTML = `<button onclick="deleteSelectedRow(this);" class="delete-icon"><i class="fas fa-times fa-2x"></i> </button>`;
+    j++;
+  }); 
+
+  console.log("-> function loadDataFromFirebase");
+}
 
 function checkEmptyInput() {
-  var isEmpty = false;
   fname = document.getElementById("fname").value;
   lname = document.getElementById("lname").value;
   email = document.getElementById("email").value;
   gender = document.getElementById("gender").value;
   birthdate = document.getElementById("birthdate").value;
-
+  var errors = "";
   if (fname === "") {
-    alert("First Name Can't Be Empty.");
-    isEmpty = true;
-  } else if (lname === "") {
-    alert("Last Name Can't Be Empty.");
-    isEmpty = true;
-  } else if (email === "") {
-    alert("Email Can't Be Empty.");
-    isEmpty = true;
-  } else if (!validateEmail(email)) {
-    alert("Email is not valid");
-    isEmpty = true;
-  } else if (gender === "") {
-    alert("Gender Can't Be Empty.");
-    isEmpty = true;
-  } else if (birthdate === "") {
-    alert("Birthdate Can't Be Empty.");
-    isEmpty = true;
-  } else if (calculateAge(birthdate) < 16) {
-    alert("Age sould be above 16.");
+    errors += "First Name Can't Be Empty.\n";
     isEmpty = true;
   }
-  return isEmpty;
+  if (lname === "") {
+    erorrs += "Last Name Can't Be Empty.\n";
+    isEmpty = true;
+  } 
+  if (email === "") {
+    errors += "Email Can't Be Empty.\n";
+    isEmpty = true;
+  } else if (!validateEmail(email)) {
+    errors += "Email is not valid\n";
+    isEmpty = true;
+  }
+  if (gender === "") {
+    errors += "Gender Can't Be Empty.\n";
+    isEmpty = true;
+  }
+  if (birthdate === "") {
+    errors += "Birthdate Can't Be Empty.\n";
+    isEmpty = true;
+  } else if (calculateAge(birthdate) < 16) {
+    errors +="Age sould be above 16.\n";
+  }
+  alert(errors);
+  if (errors === "") 
+    return true;
+  return false;
 }
 
 function calculateAge(dob) {
@@ -161,34 +196,7 @@ function clearField() {
   document.getElementById("gender").value = "";
   document.getElementById("birthdate").value = "";
   document.getElementById("photo").value = "";
-}
-
-function loadData() {
-  var j=1;
-  var archive=[];
-  for (var i = 0; i<localStorage.length; i++) 
-    {
-        archive[i] = localStorage.getItem(localStorage.key(i));
-        var arrayEmployee =  archive[i].split(",");
-        var row= table.insertRow(j);
-        row.id = arrayEmployee[0]+"row";
-        var cell1 = row.insertCell(0);
-        cell1.innerHTML = `<img src=${arrayEmployee[0]+","+arrayEmployee[1]} alt="profile-picture" height=40>`
-        var cell2 = row.insertCell(1);
-        cell2.innerHTML = arrayEmployee[2];
-        var cell3 = row.insertCell(2);
-        cell3.innerHTML = arrayEmployee[3];
-        var cell4 = row.insertCell(3);
-        cell4.innerHTML = arrayEmployee[4];
-        var cell5 = row.insertCell(4);
-        cell5.innerHTML = arrayEmployee[5];
-        var cell6 = row.insertCell(5);
-        var birthdate = moment(arrayEmployee[6]);
-        cell6.innerHTML = birthdate.format("DD MMM YYYY");
-        var cell7 = row.insertCell(6);
-        cell7.innerHTML = arrayEmployee[7];
-        j++;
-    }
+  document.getElementById("imagePlaceholder").src = "./images/person-icon.png";
 }
 
 /* functions for modal window add*/
