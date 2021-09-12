@@ -1,6 +1,6 @@
 /*----------------- Firebase configuration ---------------------*/
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.1/firebase-app.js";
-import { getFirestore, collection, getDocs, getDoc } from "https://www.gstatic.com/firebasejs/9.0.1/firebase-firestore.js"
+import { getFirestore, collection, getDocs, doc, deleteDoc} from "https://www.gstatic.com/firebasejs/9.0.1/firebase-firestore.js"
 
 // Web app's Firebase configuration
 const firebaseConfig = {
@@ -20,20 +20,20 @@ const db = getFirestore(firebaseApp);
 // Global variables
 var rIndex,
   table = document.getElementById("employees-table");
+var lastMemberId;
 
+// getting data
 async function getAllEmployees() {
-  //const employeesCollection = collection(db, "employeesData");
-  //const spanshot = await getDocs(employeesCollection);
-  const employeesSpanshot = await getDocs(collection(db,"employeesData"));
-  loadDataFromFirebase(employeesSpanshot);
+  const employeesSnapshot = await getDocs(collection(db,"employeesData"));
+  loadDataFromFirebase(employeesSnapshot);
   console.log("-> function getAllEmployees");
 }
 
 getAllEmployees();
-
-function loadDataFromFirebase(employeesSpanshot) {
+// show data in table format
+function loadDataFromFirebase(employeesSnapshot) {
   var j=1;
-  employeesSpanshot.forEach((doc) => {
+  employeesSnapshot.forEach((doc) => {
     var row= table.insertRow(j);
     var id = doc.id;
     row.id = id+"row";
@@ -49,22 +49,31 @@ function loadDataFromFirebase(employeesSpanshot) {
     var cell5 = row.insertCell(4);
     cell5.innerHTML = data["gender"];
     var cell6 = row.insertCell(5);
-    var birthdate = moment(data["birthdate"]);
+    var birthdate = moment(data["birthdate"].toDate());
     cell6.innerHTML = birthdate.format("DD MMM YYYY");
     var cell7 = row.insertCell(6);
-    cell7.innerHTML = `<button onclick="deleteSelectedRow(this);" class="delete-icon"><i class="fas fa-times fa-2x"></i> </button>`;
+    cell7.innerHTML = `<button class="delete-icon"><i class="fas fa-times fa-2x"></i> </button>`;
+    var toBeDeleted = document.getElementsByClassName("delete-icon");
+    var currentId = id;
+    toBeDeleted[row.rowIndex-1].addEventListener("click", async function(){
+      DeleteEmployeeFromTable(row,currentId);
+    });
     j++;
   }); 
-
   console.log("-> function loadDataFromFirebase");
 }
 
-function checkEmptyInput() {
-  fname = document.getElementById("fname").value;
-  lname = document.getElementById("lname").value;
-  email = document.getElementById("email").value;
-  gender = document.getElementById("gender").value;
-  birthdate = document.getElementById("birthdate").value;
+function DeleteEmployeeFromDatabase(currentId) {
+  deleteDoc(doc(db,"employeesData",`${currentId}`));
+}
+
+function DeleteEmployeeFromTable(row, currentId) {
+  var id = row.rowIndex;
+  table.deleteRow(id);
+  DeleteEmployeeFromDatabase(currentId);
+}
+
+function checkEmptyInput(fname,lname,email,gender,birthdate) {
   var errors = "";
   if (fname === "") {
     errors += "First Name Can't Be Empty.\n";
@@ -113,57 +122,6 @@ function validateEmail(email) {
         return re.test(email);
 }
 
-function addTableRow() {
-  // create a new row and its cells
-  // get values from input
-  // set cell's values
-  if (!checkEmptyInput()) {
-    newRow = table.insertRow(table.length);
-    cell1 = newRow.insertCell(0);
-    cell2 = newRow.insertCell(1);
-    cell3 = newRow.insertCell(2);
-    cell4 = newRow.insertCell(3);
-    cell5 = newRow.insertCell(4);
-    cell6 = newRow.insertCell(5);
-    cell7 = newRow.insertCell(6);
-
-    photoSrc = document.getElementById("imagePlaceholder").src;
-    photoSrc.replace(",", "\\\,");
-    console.log(photoSrc);
-    fname = document.getElementById("fname").value;
-    lname = document.getElementById("lname").value;
-    email = document.getElementById("email").value;
-    gender = document.getElementById("gender").value;
-    birthdate = document.getElementById("birthdate").value;
-    var formatedBirthdate = moment(document.getElementById("birthdate").value);
-
-    actions = `<button onclick="deleteSelectedRow(this);" class="delete-icon"><i class="fas fa-times fa-2x"></i> </button>`;
-
-    arrayEmployee = [];
-    arrayEmployee[0] = photoSrc;
-    arrayEmployee[1] = fname;
-    arrayEmployee[2] = lname;
-    arrayEmployee[3] = email;
-    arrayEmployee[4] = gender;
-    arrayEmployee[5] = formatedBirthdate.format("DD MMM YYYY");
-    arrayEmployee[6] = actions;
-    localStorage.setItem(`${email}`,arrayEmployee);
-
-    archive = localStorage.getItem(`${email}`);
-    arrayEmployee = archive.split(",");
-    cell1.innerHTML = `<img src=${arrayEmployee[0]+","+arrayEmployee[1]} alt="profile-picture" height=40>`;
-    cell2.innerHTML = arrayEmployee[2];
-    cell3.innerHTML = arrayEmployee[3];
-    cell4.innerHTML = arrayEmployee[4];
-    cell5.innerHTML = arrayEmployee[5];
-    cell6.innerHTML = arrayEmployee[6];
-    cell7.innerHTML = arrayEmployee[7];
-
-    imageSrc="";
-    clearField();
-  }
-}
-
 function showMyImage(fileInput) {
   var imageFile = fileInput.files[0];
   var img = document.getElementById("imagePlaceholder");
@@ -181,14 +139,6 @@ function showMyImage(fileInput) {
   }
 }
 
-function deleteSelectedRow(employee) {
-  var result = confirm("Are you sure you want to delete this row?");
-  if (result) {
-      var e=employee.parentNode.parentNode;
-      e.parentNode.removeChild(e);
-  }
-}
-
 function clearField() {
   document.getElementById("fname").value = "";
   document.getElementById("lname").value = "";
@@ -199,29 +149,47 @@ function clearField() {
   document.getElementById("imagePlaceholder").src = "./images/person-icon.png";
 }
 
-/* functions for modal window add*/
-// Get the modal
-var modalAdd = document.getElementById("myModal");
+document.getElementById("addWithModal").addEventListener("click", async function(){
+  openAddModal();
+});
 
-// Get the button that opens the modal
-var addBtn = document.getElementById("addWithModal");
-
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
-
-// When the user clicks the button, open the modal 
-addBtn.onclick = function() {
+function openAddModal(){
+  var modalAdd = document.getElementById("myModal");
+  var addBtn = document.getElementById("addWithModal");
+  var span = document.getElementsByClassName("close")[0];  
   modalAdd.style.display = "block";
-}
-
-// When the user clicks on <span> (x), close the modal
-span.onclick = function() {
-  modalAdd.style.display = "none";
-}
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-  if (event.target == modalAdd) {
+  span.onclick = function() {
     modalAdd.style.display = "none";
   }
+  window.onclick = function(event) {
+    if (event.target == modalAdd) {
+      modalAdd.style.display = "none";
+    }
+  }
 }
+
+
+/*const submit = document.getElementById("submit");
+submit.addEventListener("click", function(){
+  console.log("-> submit.addEventListener");
+  photoSrc = document.getElementById("imagePlaceholder").src;
+  fname = document.getElementById("fname").value;
+  lname = document.getElementById("lname").value;
+  email = document.getElementById("email").value;
+  gender = document.getElementById("gender").value;
+  birthdate = document.getElementById("birthdate").value;
+  //birthdate = moment(document.getElementById("birthdate").value);
+  //var formatedBirthdate = birthdate.format("DD MMM YYYY");
+  if (!checkEmptyInput(fname,lname,email,gender,birthdate)) {
+    db.collection("employeesData").add ({
+      photoSrc: photoSrc,
+      fname: fname,
+      lname: lname,
+      email: email,
+      gender: gender,
+      birthdate: birthdate
+    });
+    console.log("colection set?");
+    clearField();
+  }
+})*/
