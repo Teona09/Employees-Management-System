@@ -1,6 +1,14 @@
 /*----------------- Firebase configuration ---------------------*/
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.1/firebase-app.js";
-import { getFirestore, collection, getDocs, doc, deleteDoc} from "https://www.gstatic.com/firebasejs/9.0.1/firebase-firestore.js"
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  doc,
+  deleteDoc,
+  setDoc,
+  Timestamp
+} from "https://www.gstatic.com/firebasejs/9.0.1/firebase-firestore.js";
 
 // Web app's Firebase configuration
 const firebaseConfig = {
@@ -9,7 +17,7 @@ const firebaseConfig = {
   projectId: "employees-maagement-system",
   storageBucket: "employees-maagement-system.appspot.com",
   messagingSenderId: "7399188677",
-  appId: "1:7399188677:web:53f94e250a4c3b503ba8ac"
+  appId: "1:7399188677:web:53f94e250a4c3b503ba8ac",
 };
 
 // Initialize Firebase
@@ -20,26 +28,26 @@ const db = getFirestore(firebaseApp);
 // Global variables
 var rIndex,
   table = document.getElementById("employees-table");
-var lastMemberId;
+var lastMemberId = 0;
 
 // getting data
 async function getAllEmployees() {
-  const employeesSnapshot = await getDocs(collection(db,"employeesData"));
+  clearTable();
+  const employeesSnapshot = await getDocs(collection(db, "employeesData"));
   loadDataFromFirebase(employeesSnapshot);
-  console.log("-> function getAllEmployees");
 }
 
 getAllEmployees();
 // show data in table format
 function loadDataFromFirebase(employeesSnapshot) {
-  var j=1;
+  var j = 1;
   employeesSnapshot.forEach((doc) => {
-    var row= table.insertRow(j);
+    var row = table.insertRow(j);
     var id = doc.id;
-    row.id = id+"row";
+    row.id = id + "row";
     var data = doc.data();
     var cell1 = row.insertCell(0);
-    cell1.innerHTML = `<img src=${data["photoSrc"]} alt="profile-picture" height=40>`
+    cell1.innerHTML = `<img src=${data["photoSrc"]} alt="profile-picture" height=40>`;
     var cell2 = row.insertCell(1);
     cell2.innerHTML = data["fname"];
     var cell3 = row.insertCell(2);
@@ -55,16 +63,18 @@ function loadDataFromFirebase(employeesSnapshot) {
     cell7.innerHTML = `<button class="delete-icon"><i class="fas fa-times fa-2x"></i> </button>`;
     var toBeDeleted = document.getElementsByClassName("delete-icon");
     var currentId = id;
-    toBeDeleted[row.rowIndex-1].addEventListener("click", async function(){
-      DeleteEmployeeFromTable(row,currentId);
+    toBeDeleted[row.rowIndex - 1].addEventListener("click", async function () {
+      DeleteEmployeeFromTable(row, currentId);
     });
+    if (id > lastMemberId) {
+      lastMemberId = id;
+    }
     j++;
-  }); 
-  console.log("-> function loadDataFromFirebase");
+  });
 }
 
 function DeleteEmployeeFromDatabase(currentId) {
-  deleteDoc(doc(db,"employeesData",`${currentId}`));
+  deleteDoc(doc(db, "employeesData", `${currentId}`));
 }
 
 function DeleteEmployeeFromTable(row, currentId) {
@@ -73,7 +83,7 @@ function DeleteEmployeeFromTable(row, currentId) {
   DeleteEmployeeFromDatabase(currentId);
 }
 
-function checkEmptyInput(fname,lname,email,gender,birthdate) {
+function checkEmptyInput(fname, lname, email, gender, birthdate) {
   var errors = "";
   if (fname === "") {
     errors += "First Name Can't Be Empty.\n";
@@ -82,7 +92,7 @@ function checkEmptyInput(fname,lname,email,gender,birthdate) {
   if (lname === "") {
     erorrs += "Last Name Can't Be Empty.\n";
     isEmpty = true;
-  } 
+  }
   if (email === "") {
     errors += "Email Can't Be Empty.\n";
     isEmpty = true;
@@ -98,11 +108,10 @@ function checkEmptyInput(fname,lname,email,gender,birthdate) {
     errors += "Birthdate Can't Be Empty.\n";
     isEmpty = true;
   } else if (calculateAge(birthdate) < 16) {
-    errors +="Age sould be above 16.\n";
+    errors += "Age sould be above 16.\n";
   }
+  if (errors.length === 0) return true;
   alert(errors);
-  if (errors === "") 
-    return true;
   return false;
 }
 
@@ -118,15 +127,15 @@ function calculateAge(dob) {
 }
 
 function validateEmail(email) {
-        var re = /\S+@\S+\.\S+/;
-        return re.test(email);
+  var re = /\S+@\S+\.\S+/;
+  return re.test(email);
 }
 
-function showMyImage(fileInput) {
-  var imageFile = fileInput.files[0];
+function showMyImage() {
+  var imageFile = document.getElementById("photo").files[0];
+  console.log(imageFile);
   var img = document.getElementById("imagePlaceholder");
-  var imageType = /image.*/;
-  if (imageFile.type.match(imageType)) {
+  if (imageFile!=null) {
     img.file = imageFile;
 
     var reader = new FileReader();
@@ -149,47 +158,64 @@ function clearField() {
   document.getElementById("imagePlaceholder").src = "./images/person-icon.png";
 }
 
-document.getElementById("addWithModal").addEventListener("click", async function(){
-  openAddModal();
-});
+document
+  .getElementById("addWithModal")
+  .addEventListener("click", async function () {
+    openAddModal();
+  });
 
-function openAddModal(){
+function openAddModal() {
   var modalAdd = document.getElementById("myModal");
   var addBtn = document.getElementById("addWithModal");
-  var span = document.getElementsByClassName("close")[0];  
+  var span = document.getElementsByClassName("close")[0];
   modalAdd.style.display = "block";
-  span.onclick = function() {
+  span.onclick = function () {
     modalAdd.style.display = "none";
-  }
-  window.onclick = function(event) {
+  };
+  window.onclick = function (event) {
     if (event.target == modalAdd) {
       modalAdd.style.display = "none";
     }
-  }
+  };
 }
 
+document.getElementById("photo").addEventListener("click", async function (){
+  showMyImage();
+});
 
-/*const submit = document.getElementById("submit");
-submit.addEventListener("click", function(){
-  console.log("-> submit.addEventListener");
-  photoSrc = document.getElementById("imagePlaceholder").src;
-  fname = document.getElementById("fname").value;
-  lname = document.getElementById("lname").value;
-  email = document.getElementById("email").value;
-  gender = document.getElementById("gender").value;
-  birthdate = document.getElementById("birthdate").value;
-  //birthdate = moment(document.getElementById("birthdate").value);
-  //var formatedBirthdate = birthdate.format("DD MMM YYYY");
-  if (!checkEmptyInput(fname,lname,email,gender,birthdate)) {
-    db.collection("employeesData").add ({
-      photoSrc: photoSrc,
+document.getElementById("submit").addEventListener("click", async function (){
+  addEmployee();
+});
+
+function addEmployee() {
+  var photoSrc = document.getElementById("imagePlaceholder").src;
+  var fname = document.getElementById("fname").value;
+  var lname = document.getElementById("lname").value;
+  var email = document.getElementById("email").value;
+  var gender = document.getElementById("gender").value;
+  var birthdate = document.getElementById("birthdate").value;
+  console.log("-- sunt luate datele din modal");
+  if (checkEmptyInput(fname,lname,email,gender,birthdate) == true) {
+    console.log("--sunt verificate datele");
+    lastMemberId++;
+    var formatedBirthdate = new Date(birthdate);
+    var collectionRef = collection(db, "employeesData");
+    setDoc(doc(collectionRef, `${lastMemberId}`),{
       fname: fname,
       lname: lname,
       email: email,
       gender: gender,
-      birthdate: birthdate
+      birthdate: Timestamp.fromDate(formatedBirthdate),
+      photoSrc: photoSrc
     });
-    console.log("colection set?");
-    clearField();
+    console.log("se introduc datele in db");
+    getAllEmployees();
   }
-})*/
+  clearField();
+}
+
+function clearTable() {
+  for(var i = table.rows.length - 1; i>0; i--){
+    table.deleteRow(i);
+  }
+}

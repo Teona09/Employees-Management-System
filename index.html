@@ -30,15 +30,33 @@
           <div class="input-form">
             <div class="input-data">
               <label for="fname">First name: </label>
-              <input type="search" class="search-bar" name="fname" id="fname" required />
+              <input
+                type="search"
+                class="search-bar"
+                name="fname"
+                id="fname"
+                required
+              />
             </div>
             <div class="input-data">
               <label for="lname">Last name: </label>
-              <input type="search" class="search-bar" name="lname" id="lname" required />
+              <input
+                type="search"
+                class="search-bar"
+                name="lname"
+                id="lname"
+                required
+              />
             </div>
             <div class="input-data">
               <label for="email">Email: </label>
-              <input type="search" class="search-bar" name="email" id="email" required />
+              <input
+                type="search"
+                class="search-bar"
+                name="email"
+                id="email"
+                required
+              />
             </div>
             <div class="input-data">
               <label for="gender">Gender: </label>
@@ -57,11 +75,19 @@
             </div>
             <div class="input-data">
               <label for="photo">Photo: </label>
-              <input type="file" name="photo" id="photo" onchange="showMyImage(this)"/>
-              <img id="imagePlaceholder" src="./images/person-icon.png" height="40px"/>
+              <input
+                type="file"
+                name="photo"
+                id="photo"
+              />
+              <img
+                id="imagePlaceholder"
+                src="./images/person-icon.png"
+                height="40px"
+              />
             </div>
-            <br>
-            <button id="submit" onclick="addTableRow();">Submit</button>
+            <br />
+            <button id="submit">Submit</button>
           </div>
         </div>
       </div>
