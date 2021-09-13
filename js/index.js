@@ -28,18 +28,19 @@ const db = getFirestore(firebaseApp);
 // Global variables
 var rIndex,
   table = document.getElementById("employees-table");
+const employeesSnapshot = await getDocs(collection(db, "employeesData"));
 var lastMemberId = 0;
 
 // getting data
 async function getAllEmployees() {
   clearTable();
-  const employeesSnapshot = await getDocs(collection(db, "employeesData"));
-  loadDataFromFirebase(employeesSnapshot);
+  loadDataFromFirebase();
 }
 
 getAllEmployees();
+
 // show data in table format
-function loadDataFromFirebase(employeesSnapshot) {
+function loadDataFromFirebase() {
   var j = 1;
   employeesSnapshot.forEach((doc) => {
     var row = table.insertRow(j);
@@ -221,4 +222,56 @@ function clearTable() {
   for (var i = table.rows.length - 1; i > 0; i--) {
     table.deleteRow(i);
   }
+}
+
+document.getElementById("search-icon").addEventListener("click", async function () {
+  searchMemberByName();
+});
+
+function searchMemberByName() {
+  console.log("search by name");
+  var name = document.getElementById("search-bar").value;
+  console.log(name);
+  clearTable();
+  filterEmployeesByName(name);
+}
+
+function filterEmployeesByName(name) {
+  var j = 1;
+  employeesSnapshot.forEach((doc) => {    
+    var data = doc.data();
+    if (data["fname"].includes(name) || data["lname"].includes(name)) {
+      var row = table.insertRow(j);
+      var id = doc.id;
+      row.id = id + "row";
+      var cell1 = row.insertCell(0);
+      cell1.innerHTML = `<img src=${data["photoSrc"]} alt="profile-picture" height=40>`;
+      var cell2 = row.insertCell(1);
+      cell2.innerHTML = data["fname"];
+      var cell3 = row.insertCell(2);
+      cell3.innerHTML = data["lname"];
+      var cell4 = row.insertCell(3);
+      cell4.innerHTML = data["email"];
+      var cell5 = row.insertCell(4);
+      cell5.innerHTML = data["gender"];
+      var cell6 = row.insertCell(5);
+      var birthdate = moment(data["birthdate"].toDate());
+      cell6.innerHTML = birthdate.format("DD MMM YYYY");
+      var cell7 = row.insertCell(6);
+      cell7.innerHTML = `<button class="delete-icon"><i class="fas fa-times fa-2x"></i> </button>`;
+      var toBeDeleted = document.getElementsByClassName("delete-icon");
+      var currentId = id;
+      toBeDeleted[row.rowIndex - 1].addEventListener(
+        "click",
+        async function () {
+          DeleteEmployeeFromTable(row, currentId);
+        }
+      );
+      currentId = parseInt(id);
+      if (currentId > lastMemberId) {
+        lastMemberId = currentId;
+      }
+      j++;
+    }
+  });
 }
