@@ -28,21 +28,22 @@ const db = getFirestore(firebaseApp);
 // Global variables
 var rIndex,
   table = document.getElementById("employees-table");
-const employeesSnapshot = await getDocs(collection(db, "employeesData"));
 var lastMemberId = 0;
+var imageRef = "";
 
 // getting data
 async function getAllEmployees() {
   clearTable();
-  loadDataFromFirebase();
+  const employeesSnapshot = await getDocs(collection(db, "employeesData"));
+  loadDataFromFirebase(employeesSnapshot);
 }
 
 getAllEmployees();
 
 // show data in table format
-function loadDataFromFirebase() {
+function loadDataFromFirebase(snapshot) {
   var j = 1;
-  employeesSnapshot.forEach((doc) => {
+  snapshot.forEach((doc) => {
     var row = table.insertRow(j);
     var id = doc.id;
     row.id = id + "row";
@@ -135,23 +136,6 @@ function validateEmail(email) {
   return re.test(email);
 }
 
-function showMyImage() {
-  var imageFile = document.getElementById("photo").files[0];
-  console.log(imageFile);
-  var img = document.getElementById("imagePlaceholder");
-  if (imageFile != null) {
-    img.file = imageFile;
-
-    var reader = new FileReader();
-    reader.onload = (function (img) {
-      return function (e) {
-        img.src = e.target.result;
-      };
-    })(img);
-    reader.readAsDataURL(imageFile);
-  }
-}
-
 function clearField() {
   document.getElementById("fname").value = "";
   document.getElementById("lname").value = "";
@@ -183,9 +167,22 @@ function openAddModal() {
   };
 }
 
-document.getElementById("photo").addEventListener("click", async function () {
-  showMyImage();
-});
+function readFile() {
+  imageRef = "";
+  if (this.files && this.files[0]) {
+    var FR = new FileReader();
+    FR.addEventListener("load", function (e) {
+      document.getElementById("imagePlaceholder").src = e.target.result;
+      imageRef = e.target.result.toString();
+    });
+    FR.readAsDataURL(this.files[0]);
+    console.log(imageRef);
+  } else {
+    imageRef = document.getElementById("imagePlaceholder").src;
+  }
+}
+
+document.getElementById("photo").addEventListener("change", readFile);
 
 document.getElementById("submit").addEventListener("click", async function () {
   addEmployee();
@@ -224,21 +221,23 @@ function clearTable() {
   }
 }
 
-document.getElementById("search-icon").addEventListener("click", async function () {
-  searchMemberByName();
-});
+document
+  .getElementById("search-icon")
+  .addEventListener("click", async function () {
+    searchMemberByName();
+  });
 
 function searchMemberByName() {
-  console.log("search by name");
   var name = document.getElementById("search-bar").value;
   console.log(name);
   clearTable();
   filterEmployeesByName(name);
 }
 
-function filterEmployeesByName(name) {
+async function filterEmployeesByName(name) {
   var j = 1;
-  employeesSnapshot.forEach((doc) => {    
+  var employeesSnapshot = await getDocs(collection(db, "employeesData"));
+  employeesSnapshot.forEach((doc) => {
     var data = doc.data();
     if (data["fname"].includes(name) || data["lname"].includes(name)) {
       var row = table.insertRow(j);

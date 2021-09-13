@@ -20,16 +20,27 @@
     </div>
     <!-- Content -->
     <section class="content">
-    <!-- Search area -->
-      <div class="search-area">
+      <!-- Search area -->
+      <div class="sort-filter-area">
         <div class="search-input">
-          <input type="text" title="Search employee by name" id="search-bar">
+          <input type="text" title="Search employee by name" id="search-bar" />
           <span id="search-icon">
             <i class="fas fa-search"></i>
           </span>
         </div>
+        <div class="sort-area">
+          <div class="sort-select">
+            <label id="sort-label" for="sort">Sort by:</label>
+            <select id="sort-list">
+                <option value=" ">None</option>
+                <option value="asc-alphabetically">Ascending alphabetically after first name</option>
+                <option value="desc-alphabetically">Descending alphabetically after first name</option>
+                <option value="asc-birthdate">Ascending after birthdate</option>
+                <option value="desc-birthdate">Descending after birthdate</option>
+            </select>
+        </div>
       </div>
-      
+
       <!-- Add button for modal window -->
       <button id="addWithModal">Add record</button>
       <!-- The Modal -->
@@ -85,11 +96,7 @@
             </div>
             <div class="input-data">
               <label for="photo">Photo: </label>
-              <input
-                type="file"
-                name="photo"
-                id="photo"
-              />
+              <input type="file" name="photo" id="photo" />
               <img
                 id="imagePlaceholder"
                 src="./images/person-icon.png"
