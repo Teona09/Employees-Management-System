@@ -8,6 +8,8 @@ import {
   deleteDoc,
   setDoc,
   Timestamp,
+  query,
+  orderBy,
 } from "https://www.gstatic.com/firebasejs/9.0.1/firebase-firestore.js";
 
 // Web app's Firebase configuration
@@ -33,7 +35,6 @@ var imageRef = "";
 
 // getting data
 async function getAllEmployees() {
-  clearTable();
   const employeesSnapshot = await getDocs(collection(db, "employeesData"));
   loadDataFromFirebase(employeesSnapshot);
 }
@@ -42,6 +43,7 @@ getAllEmployees();
 
 // show data in table format
 function loadDataFromFirebase(snapshot) {
+  clearTable();
   var j = 1;
   snapshot.forEach((doc) => {
     var row = table.insertRow(j);
@@ -116,7 +118,6 @@ function checkEmptyInput(fname, lname, email, gender, birthdate) {
   }
   if (errors.length === 0) return true;
   alert(errors);
-  console.log(errors);
   return false;
 }
 
@@ -176,7 +177,6 @@ function readFile() {
       imageRef = e.target.result.toString();
     });
     FR.readAsDataURL(this.files[0]);
-    console.log(imageRef);
   } else {
     imageRef = document.getElementById("imagePlaceholder").src;
   }
@@ -190,14 +190,12 @@ document.getElementById("submit").addEventListener("click", async function () {
 
 function addEmployee() {
   var photoSrc = document.getElementById("imagePlaceholder").src;
-  var fname = document.getElementById("fname").value;
-  var lname = document.getElementById("lname").value;
+  var fname = document.getElementById("fname").value.toLowerCase();
+  var lname = document.getElementById("lname").value.toLowerCase();
   var email = document.getElementById("email").value;
   var gender = document.getElementById("gender").value;
   var birthdate = document.getElementById("birthdate").value;
-  console.log("-- sunt luate datele din modal");
   if (checkEmptyInput(fname, lname, email, gender, birthdate) == true) {
-    console.log("--sunt verificate datele");
     lastMemberId++;
     var formatedBirthdate = new Date(birthdate);
     var collectionRef = collection(db, "employeesData");
@@ -209,7 +207,6 @@ function addEmployee() {
       birthdate: Timestamp.fromDate(formatedBirthdate),
       photoSrc: photoSrc,
     });
-    console.log("se introduc datele in db");
     getAllEmployees();
   }
   clearField();
@@ -229,9 +226,9 @@ document
 
 function searchMemberByName() {
   var name = document.getElementById("search-bar").value;
-  console.log(name);
   clearTable();
   filterEmployeesByName(name);
+  document.getElementById("search-bar").value = "";
 }
 
 async function filterEmployeesByName(name) {
@@ -273,4 +270,47 @@ async function filterEmployeesByName(name) {
       j++;
     }
   });
+}
+
+document
+  .getElementById("sort-list")
+  .addEventListener("change", async function () {
+    var option = document.getElementById("sort-list").value;
+    if (option == "asc-alphabetically") {
+      sortAphabeticaly(true);
+    } else if (option == "desc-alphabetically") {
+      sortAphabeticaly(false);
+    } else if (option == "asc-birthdate") {
+      sortAfterBirthdate(true);
+    } else if (option == "desc-birthdate") {
+      sortAfterBirthdate(false);
+    } else {
+      getAllEmployees();
+    }
+  });
+
+async function sortAphabeticaly(ascending) {
+  var option = "asc";
+  if (ascending == false) {
+    option = "desc";
+  }
+  const sortedQuery = query(
+    collection(db, "employeesData"),
+    orderBy("fname", `${option}`)
+  );
+  const snapshot = await getDocs(sortedQuery);
+  loadDataFromFirebase(snapshot);
+}
+
+async function sortAfterBirthdate(ascending) {
+  var option = "asc";
+  if (ascending == false) {
+    option = "desc";
+  }
+  const sortedQuery = query(
+    collection(db, "employeesData"),
+    orderBy("birthdate", `${option}`)
+  );
+  const snapshot = await getDocs(sortedQuery);
+  loadDataFromFirebase(snapshot);
 }
