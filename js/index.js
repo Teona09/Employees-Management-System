@@ -7,7 +7,7 @@ import {
   doc,
   deleteDoc,
   setDoc,
-  Timestamp
+  Timestamp,
 } from "https://www.gstatic.com/firebasejs/9.0.1/firebase-firestore.js";
 
 // Web app's Firebase configuration
@@ -66,8 +66,9 @@ function loadDataFromFirebase(employeesSnapshot) {
     toBeDeleted[row.rowIndex - 1].addEventListener("click", async function () {
       DeleteEmployeeFromTable(row, currentId);
     });
-    if (id > lastMemberId) {
-      lastMemberId = id;
+    currentId = parseInt(id);
+    if (currentId > lastMemberId) {
+      lastMemberId = currentId;
     }
     j++;
   });
@@ -85,12 +86,13 @@ function DeleteEmployeeFromTable(row, currentId) {
 
 function checkEmptyInput(fname, lname, email, gender, birthdate) {
   var errors = "";
+  var isEmpty = false;
   if (fname === "") {
     errors += "First Name Can't Be Empty.\n";
     isEmpty = true;
   }
   if (lname === "") {
-    erorrs += "Last Name Can't Be Empty.\n";
+    errors += "Last Name Can't Be Empty.\n";
     isEmpty = true;
   }
   if (email === "") {
@@ -112,6 +114,7 @@ function checkEmptyInput(fname, lname, email, gender, birthdate) {
   }
   if (errors.length === 0) return true;
   alert(errors);
+  console.log(errors);
   return false;
 }
 
@@ -135,7 +138,7 @@ function showMyImage() {
   var imageFile = document.getElementById("photo").files[0];
   console.log(imageFile);
   var img = document.getElementById("imagePlaceholder");
-  if (imageFile!=null) {
+  if (imageFile != null) {
     img.file = imageFile;
 
     var reader = new FileReader();
@@ -179,11 +182,11 @@ function openAddModal() {
   };
 }
 
-document.getElementById("photo").addEventListener("click", async function (){
+document.getElementById("photo").addEventListener("click", async function () {
   showMyImage();
 });
 
-document.getElementById("submit").addEventListener("click", async function (){
+document.getElementById("submit").addEventListener("click", async function () {
   addEmployee();
 });
 
@@ -195,18 +198,18 @@ function addEmployee() {
   var gender = document.getElementById("gender").value;
   var birthdate = document.getElementById("birthdate").value;
   console.log("-- sunt luate datele din modal");
-  if (checkEmptyInput(fname,lname,email,gender,birthdate) == true) {
+  if (checkEmptyInput(fname, lname, email, gender, birthdate) == true) {
     console.log("--sunt verificate datele");
     lastMemberId++;
     var formatedBirthdate = new Date(birthdate);
     var collectionRef = collection(db, "employeesData");
-    setDoc(doc(collectionRef, `${lastMemberId}`),{
+    setDoc(doc(collectionRef, `${lastMemberId}`), {
       fname: fname,
       lname: lname,
       email: email,
       gender: gender,
       birthdate: Timestamp.fromDate(formatedBirthdate),
-      photoSrc: photoSrc
+      photoSrc: photoSrc,
     });
     console.log("se introduc datele in db");
     getAllEmployees();
@@ -215,7 +218,7 @@ function addEmployee() {
 }
 
 function clearTable() {
-  for(var i = table.rows.length - 1; i>0; i--){
+  for (var i = table.rows.length - 1; i > 0; i--) {
     table.deleteRow(i);
   }
 }
