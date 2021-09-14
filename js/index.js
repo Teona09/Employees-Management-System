@@ -68,7 +68,10 @@ function loadDataFromFirebase(snapshot) {
     var toBeDeleted = document.getElementsByClassName("delete-icon");
     var currentId = id;
     toBeDeleted[row.rowIndex - 1].addEventListener("click", async function () {
-      DeleteEmployeeFromTable(row, currentId);
+      var result = confirm("Are you sure you want to delete this row?");
+      if (result) {
+        DeleteEmployeeFromTable(row, currentId);
+      }
     });
     currentId = parseInt(id);
     if (currentId > lastMemberId) {
@@ -211,7 +214,6 @@ function addEmployee() {
     getAllEmployees();
     clearField();
   }
-
 }
 
 function clearTable() {
