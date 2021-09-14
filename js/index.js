@@ -160,6 +160,7 @@ function openAddModal() {
   modalAdd.style.display = "block";
   span.onclick = function () {
     modalAdd.style.display = "none";
+    clearField();
   };
   window.onclick = function (event) {
     if (event.target == modalAdd) {
@@ -208,8 +209,9 @@ function addEmployee() {
       photoSrc: photoSrc,
     });
     getAllEmployees();
+    clearField();
   }
-  clearField();
+
 }
 
 function clearTable() {

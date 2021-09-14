@@ -324,6 +324,11 @@ td {
 @media (max-width: 750px) {
   .modal-content-add {
     width: 60%;
-    height: 60%;
+  }
+}
+
+@media (max-height: 800px) {
+  .modal-content-add {
+    height: 70%;
   }
 }
